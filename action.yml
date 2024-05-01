@@ -25,7 +25,11 @@ runs:
         if [ "${{ runner.os }}" == "Windows" ]; then
           _target_arch=x86_64-pc-windows-msvc
         elif [ "${{ runner.os }}" == "macOS" ]; then
-          _target_arch=x86_64-apple-darwin
+          if [ "${{ runner.arch }}" == "X86" ]; then
+            _target_arch=x86_64-apple-darwin
+          else
+            _target_arch=aarch64-apple-darwin
+          fi
         else
           _target_arch=x86_64-unknown-linux-gnu
         fi
@@ -47,7 +51,7 @@ runs:
         _release=$(curl -sSL -H 'authorization: Bearer ${{ github.token }}' https://api.github.com/repos/gi0baro/poetry-bin/releases/latest)
         _version=$(echo "$_release" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 
-        echo -e "\033[33mInstalling Poetry $_version\033[0m\n"
+        echo -e "\033[33mInstalling Poetry $_version ($_target_arch)\033[0m\n"
         _archive=$(mktemp)
         curl -sSL https://github.com/gi0baro/poetry-bin/releases/download/$_version/poetry-bin-$_version-$_target_arch.tar.gz > $_archive
         tar xzf $_archive --directory $path
