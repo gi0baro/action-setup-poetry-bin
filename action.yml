@@ -25,7 +25,7 @@ runs:
         if [ "${{ runner.os }}" == "Windows" ]; then
           _target_arch=x86_64-pc-windows-msvc
         elif [ "${{ runner.os }}" == "macOS" ]; then
-          if [ "${{ runner.arch }}" == "X86" ]; then
+          if [ "${{ runner.arch }}" == "X64" ]; then
             _target_arch=x86_64-apple-darwin
           else
             _target_arch=aarch64-apple-darwin
