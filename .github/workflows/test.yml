@@ -8,8 +8,15 @@ jobs:
       - uses: ./
       - run: poetry --version
 
-  macos:
-    runs-on: macos-latest
+  macos-x86:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+      - run: poetry --version
+
+  macos-arm:
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v2
       - uses: ./
